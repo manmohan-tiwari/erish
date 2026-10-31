@@ -1,0 +1,56 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.admin == true ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    // 1. Products Collection
+    // Public read for active catalog items; write restricted to administrators.
+    match /products/{productId} {
+      allow read: if resource == null || resource.data.isActive == true || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // 2. Orders Collection
+    // Strict client validation on placement; status alterations reserved for server/admin.
+    match /orders/{orderId} {
+      allow create: if request.resource.data.totalInPaise > 0
+                    && request.resource.data.customerEmail is string
+                    && request.resource.data.paymentStatus == 'pending'
+                    && request.resource.data.orderStatus == 'placed';
+
+      allow read: if isAdmin() || (
+        isAuthenticated() && resource.data.customerEmail == request.auth.token.email
+      );
+
+      // Only admins or backend Admin SDK can update fulfillment/payment status
+      allow update, delete: if isAdmin();
+    }
+
+    // 3. Newsletter Subscribers
+    // Public subscription creation with email format & length check; read/delete admin only.
+    match /newsletter_subscribers/{subscriberId} {
+      allow create: if request.resource.data.email is string
+                    && request.resource.data.email.size() <= 254
+                    && request.resource.data.email.matches('^.+@.+\\..+$');
+      allow read, update, delete: if isAdmin();
+    }
+
+    // 4. Admin Users Registry
+    match /admins/{adminUid} {
+      allow read: if isAuthenticated() && request.auth.uid == adminUid;
+      allow write: if false; // Provisioned via Firebase Console or Admin SDK
+    }
+  }
+}
+

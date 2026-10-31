@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "983945559161",
+    "project_id": "erish-fashion",
+    "storage_bucket": "erish-fashion.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983945559161:android:e6d2cbe098f40aca2928a8",
+        "android_client_info": {
+          "package_name": "com.erish.label"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPZQrcTmqubVIjJ8HJI2SqZQ24lqfNk2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983945559161:android:40839374ad8160a42928a8",
+        "android_client_info": {
+          "package_name": "com.erish.label.erish_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPZQrcTmqubVIjJ8HJI2SqZQ24lqfNk2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

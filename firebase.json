@@ -1,0 +1,38 @@
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "functions": {
+    "source": "functions",
+    "ignore": [
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log"
+    ]
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "erish-fashion",
+          "appId": "1:983945559161:android:e6d2cbe098f40aca2928a8",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "erish-fashion",
+          "configurations": {
+            "android": "1:983945559161:android:e6d2cbe098f40aca2928a8",
+            "ios": "1:983945559161:ios:87af1eb158602a7b2928a8",
+            "web": "1:983945559161:web:1a0a274cee0883492928a8"
+          }
+        }
+      }
+    }
+  }
+}

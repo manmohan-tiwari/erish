@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Discover ERISH — expressive resort wear, handcrafted silhouettes, and timeless wanderlust edits made to stand out.">
+  <meta name="keywords" content="ERISH, luxury resort wear, maxi dresses, printed kaftans, wanderlust edit, summer fashion">
+
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ERISH — Wear the Feeling | Luxury Resort Wear">
+  <meta property="og:description" content="Discover ERISH — expressive resort wear, handcrafted silhouettes, and timeless wanderlust edits.">
+  <meta property="og:image" content="assets/images/hero-model.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="ERISH — Wear the Feeling">
+  <meta property="twitter:description" content="Discover ERISH — expressive resort wear, handcrafted silhouettes, and timeless wanderlust edits.">
+  <meta property="twitter:image" content="assets/images/hero-model.jpg">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ERISH">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>ERISH — Wear the Feeling | Luxury Fashion & Resort Wear</title>
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #FBF8F3;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      overflow-x: hidden;
+    }
+
+    #loading-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #FBF8F3;
+      z-index: 999999;
+      transition: opacity 0.5s ease-out;
+    }
+
+    .brand-mark {
+      font-family: Georgia, serif;
+      font-size: 28px;
+      letter-spacing: 6px;
+      color: #2D2421;
+      font-weight: 600;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    .spinner-ring {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      border: 2px solid rgba(45, 36, 33, 0.15);
+      border-radius: 50%;
+      border-top-color: #D47A88;
+      animation: spin 0.85s linear infinite;
+    }
+
+    .loading-tagline {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #7E7671;
+      margin-top: 18px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Elegant Branded Splash Loader for Flutter Web -->
+  <div id="loading-container">
+    <div class="brand-mark">ERISH</div>
+    <div class="spinner-ring"></div>
+    <div class="loading-tagline">Wear the Feeling</div>
+  </div>
+
+  <script>
+    // Remove loading screen once Flutter app paints first frame
+    window.addEventListener('flutter-first-frame', function () {
+      const loader = document.getElementById('loading-container');
+      if (loader) {
+        loader.style.opacity = '0';
+        setTimeout(function () {
+          loader.remove();
+        }, 500);
+      }
+    });
+  </script>
+
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
