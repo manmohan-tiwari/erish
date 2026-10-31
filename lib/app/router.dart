@@ -8,6 +8,7 @@ import '../features/product/presentation/product_detail_page.dart';
 import '../features/checkout/presentation/checkout_page.dart';
 import '../features/orders/presentation/order_confirmation_page.dart';
 import '../features/admin/presentation/admin_portal_page.dart';
+import '../features/auth/presentation/auth_page.dart';
 
 /// ERISH Official Application Router
 /// Supports deep linking for web direct-load and navigation
@@ -19,6 +20,9 @@ class AppRouter {
   static const String checkout = '/checkout';
   static const String orderConfirmation = '/order-confirmation';
   static const String admin = '/admin';
+  static const String login = '/login';
+  static const String signup = '/signup';
+  static const String auth = '/auth';
 
   static final GoRouter router = GoRouter(
     initialLocation: home,
@@ -66,6 +70,21 @@ class AppRouter {
         path: admin,
         name: 'admin',
         builder: (context, state) => const AdminPortalPage(),
+      ),
+      GoRoute(
+        path: login,
+        name: 'login',
+        builder: (context, state) => const AuthPage(initialTab: AuthTab.signIn),
+      ),
+      GoRoute(
+        path: signup,
+        name: 'signup',
+        builder: (context, state) => const AuthPage(initialTab: AuthTab.signUp),
+      ),
+      GoRoute(
+        path: auth,
+        name: 'auth',
+        builder: (context, state) => const AuthPage(initialTab: AuthTab.signIn),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(

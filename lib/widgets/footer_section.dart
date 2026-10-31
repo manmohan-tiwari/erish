@@ -110,7 +110,7 @@ class FooterSection extends StatelessWidget {
                 0, 0, 0, 1, 0, // alpha
               ]),
               child: Image.asset(
-                'assets/images/erish-logo.jpg',
+                'assets/images/erish-logo.png',
                 height: 36,
                 fit: BoxFit.contain,
               ),

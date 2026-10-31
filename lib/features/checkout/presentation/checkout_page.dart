@@ -11,6 +11,7 @@ import '../../../models/cart_item.dart';
 import '../../../services/cart_provider.dart';
 import '../../../services/firebase_service.dart';
 import '../../cart/data/payment_service.dart';
+import '../../auth/services/auth_service.dart';
 
 /// ERISH Official Checkout Flow
 /// Multi-step progressive checkout:
@@ -44,6 +45,18 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   // Payment Selection: 0 = UPI, 1 = Card, 2 = NetBanking, 3 = COD
   int _paymentMethod = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    final auth = AuthService();
+    if (auth.isAuthenticated) {
+      if (auth.displayName != 'Valued Guest') {
+        _nameController.text = auth.displayName;
+      }
+      _emailController.text = auth.email;
+    }
+  }
 
   @override
   void dispose() {
@@ -266,7 +279,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: Image.asset(
-            'assets/images/erish-logo.jpg',
+            'assets/images/erish-logo.png',
             height: 34,
             fit: BoxFit.contain,
             errorBuilder: (context, error, stackTrace) => Text(

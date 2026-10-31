@@ -204,7 +204,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: Image.asset(
-            'assets/images/erish-logo.jpg',
+            'assets/images/erish-logo.png',
             height: 34,
             fit: BoxFit.contain,
             errorBuilder: (context, error, stackTrace) => Text(

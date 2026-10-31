@@ -9,6 +9,7 @@ import 'core/widgets/erish_button.dart';
 import 'models/product.dart';
 import 'services/cart_provider.dart';
 import 'services/firebase_service.dart';
+import 'features/auth/services/auth_service.dart';
 
 import 'widgets/announcement_bar.dart';
 import 'widgets/nav_header.dart';
@@ -34,6 +35,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => AuthService()),
         Provider.value(value: firebaseService),
       ],
       child: const ErishApp(),
@@ -107,6 +109,8 @@ class _ErishHomePageState extends State<ErishHomePage> {
   }
 
   void _showAccountDialog(BuildContext context) {
+    final auth = Provider.of<AuthService>(context, listen: false);
+
     showDialog(
       context: context,
       builder: (ctx) {
@@ -117,44 +121,143 @@ class _ErishHomePageState extends State<ErishHomePage> {
             constraints: const BoxConstraints(maxWidth: 440),
             child: Padding(
               padding: const EdgeInsets.all(28.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.person_pin, size: 48, color: AppColors.pink),
-                  const SizedBox(height: 16),
-                  Text(
-                    'My Account & Orders',
-                    style: AppTypography.sectionTitle(
-                      color: AppColors.espresso,
+              child: auth.isAuthenticated
+                  ? Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.verified_user_outlined,
+                          size: 48,
+                          color: AppColors.pink,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Hello, ${auth.displayName}',
+                          textAlign: TextAlign.center,
+                          style: AppTypography.sectionTitle(
+                            color: AppColors.espresso,
+                          ),
+                        ),
+                        if (auth.email.isNotEmpty) ...[
+                          const SizedBox(height: 6),
+                          Text(
+                            auth.email,
+                            style: AppTypography.caption(color: AppColors.muted),
+                          ),
+                        ],
+                        const SizedBox(height: 12),
+                        Text(
+                          'Welcome to your personal ERISH client sanctuary.',
+                          textAlign: TextAlign.center,
+                          style: AppTypography.body(color: AppColors.muted),
+                        ),
+                        const SizedBox(height: 24),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ErishButton(
+                            text: 'Track Your Order',
+                            onPressed: () {
+                              Navigator.of(ctx).pop();
+                              InfoModal.show(context, 'track');
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ErishButton.ghost(
+                            text: 'Sign Out',
+                            onPressed: () async {
+                              Navigator.of(ctx).pop();
+                              await auth.signOut();
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'You have signed out of ERISH.',
+                                      style: AppTypography.button(
+                                        color: AppColors.warmIvory,
+                                      ),
+                                    ),
+                                    backgroundColor: AppColors.espresso,
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(),
+                          child: Text(
+                            'CLOSE',
+                            style: AppTypography.button(color: AppColors.muted),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.person_pin, size: 48, color: AppColors.pink),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Customer Account',
+                          style: AppTypography.sectionTitle(
+                            color: AppColors.espresso,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'Sign in to access your orders, track shipments, and receive curated fashion updates.',
+                          textAlign: TextAlign.center,
+                          style: AppTypography.body(color: AppColors.muted),
+                        ),
+                        const SizedBox(height: 24),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ErishButton(
+                            text: 'Sign In to Account',
+                            onPressed: () {
+                              Navigator.of(ctx).pop();
+                              context.push('/login');
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ErishButton.ghost(
+                            text: 'Create New Account',
+                            onPressed: () {
+                              Navigator.of(ctx).pop();
+                              context.push('/signup');
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(ctx).pop();
+                            InfoModal.show(context, 'track');
+                          },
+                          child: Text(
+                            'Track Order as Guest',
+                            style: AppTypography.caption(
+                              color: AppColors.pink,
+                            ).copyWith(fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        TextButton(
+                          onPressed: () => Navigator.of(ctx).pop(),
+                          child: Text(
+                            'CLOSE',
+                            style: AppTypography.button(color: AppColors.muted),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'Track shipments, review your order history, or access the store operations portal.',
-                    textAlign: TextAlign.center,
-                    style: AppTypography.body(color: AppColors.muted),
-                  ),
-                  const SizedBox(height: 24),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ErishButton(
-                      text: 'Track Your Order',
-                      onPressed: () {
-                        Navigator.of(ctx).pop();
-                        InfoModal.show(context, 'track');
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  TextButton(
-                    onPressed: () => Navigator.of(ctx).pop(),
-                    child: Text(
-                      'CLOSE',
-                      style: AppTypography.button(color: AppColors.muted),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ),
         );
@@ -189,7 +292,7 @@ class _ErishHomePageState extends State<ErishHomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.asset('assets/images/erish-logo.jpg', height: 32),
+                    Image.asset('assets/images/erish-logo.png', height: 32),
                     IconButton(
                       icon: const Icon(Icons.close, color: AppColors.espresso),
                       onPressed: () => Navigator.of(context).pop(),
@@ -225,6 +328,38 @@ class _ErishHomePageState extends State<ErishHomePage> {
                   Navigator.of(context).pop();
                   InfoModal.show(context, 'track');
                 }),
+                Consumer<AuthService>(
+                  builder: (context, auth, _) {
+                    if (auth.isAuthenticated) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _drawerItem('MY ACCOUNT', () {
+                            Navigator.of(context).pop();
+                            _showAccountDialog(context);
+                          }),
+                          _drawerItem('SIGN OUT', () {
+                            Navigator.of(context).pop();
+                            auth.signOut();
+                          }),
+                        ],
+                      );
+                    }
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _drawerItem('SIGN IN', () {
+                          Navigator.of(context).pop();
+                          context.push('/login');
+                        }),
+                        _drawerItem('REGISTER', () {
+                          Navigator.of(context).pop();
+                          context.push('/signup');
+                        }),
+                      ],
+                    );
+                  },
+                ),
               ],
             ),
           ),

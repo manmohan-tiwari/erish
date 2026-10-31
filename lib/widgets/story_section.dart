@@ -67,7 +67,7 @@ class StorySection extends StatelessWidget {
               ],
             ),
             child: Image.asset(
-              'assets/images/erish-logo.jpg',
+              'assets/images/erish-logo.png',
               width: 340,
               fit: BoxFit.contain,
             ),

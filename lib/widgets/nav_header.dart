@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_typography.dart';
 import '../core/motion/motion_tokens.dart';
+import '../features/auth/services/auth_service.dart';
 import '../services/cart_provider.dart';
 
 /// ERISH Sticky Navigation Header
@@ -55,7 +56,7 @@ class NavHeader extends StatelessWidget {
                 child: MouseRegion(
                   cursor: SystemMouseCursors.click,
                   child: Image.asset(
-                    'assets/images/erish-logo.jpg',
+                    'assets/images/erish-logo.png',
                     height: 40,
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) => Text(
@@ -96,14 +97,40 @@ class NavHeader extends StatelessWidget {
                   ),
                   if (isDesktop) ...[
                     const SizedBox(width: 4),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.person_outline,
-                        size: 20,
-                        color: AppColors.espresso,
-                      ),
-                      tooltip: 'Account',
-                      onPressed: onAccountTap,
+                    Consumer<AuthService>(
+                      builder: (context, auth, _) {
+                        return IconButton(
+                          icon: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Icon(
+                                auth.isAuthenticated
+                                    ? Icons.person
+                                    : Icons.person_outline,
+                                size: 20,
+                                color: AppColors.espresso,
+                              ),
+                              if (auth.isAuthenticated)
+                                Positioned(
+                                  right: -1,
+                                  top: -1,
+                                  child: Container(
+                                    width: 7,
+                                    height: 7,
+                                    decoration: const BoxDecoration(
+                                      color: AppColors.pink,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                          tooltip: auth.isAuthenticated
+                              ? 'Account (${auth.displayName})'
+                              : 'Sign In / Account',
+                          onPressed: onAccountTap,
+                        );
+                      },
                     ),
                   ],
                   const SizedBox(width: 4),

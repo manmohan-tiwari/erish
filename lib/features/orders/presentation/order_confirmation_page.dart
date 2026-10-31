@@ -30,7 +30,7 @@ class OrderConfirmationPage extends StatelessWidget {
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: Image.asset(
-                'assets/images/erish-logo.jpg',
+                'assets/images/erish-logo.png',
                 height: 36,
                 fit: BoxFit.contain,
                 errorBuilder: (context, error, stackTrace) => Text(
@@ -102,7 +102,7 @@ class OrderConfirmationPage extends StatelessWidget {
           child: MouseRegion(
             cursor: SystemMouseCursors.click,
             child: Image.asset(
-              'assets/images/erish-logo.jpg',
+              'assets/images/erish-logo.png',
               height: 36,
               fit: BoxFit.contain,
               errorBuilder: (context, error, stackTrace) => Text(

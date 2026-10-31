@@ -579,7 +579,7 @@ class _AdminPortalPageState extends State<AdminPortalPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Image.asset('assets/images/erish-logo.jpg', height: 42),
+                    Image.asset('assets/images/erish-logo.png', height: 42),
                     const SizedBox(height: 24),
                     Text(
                       'Admin Portal',

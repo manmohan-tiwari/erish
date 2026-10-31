@@ -6,6 +6,7 @@ import 'package:erish_app/features/product/presentation/product_detail_page.dart
 import 'package:erish_app/features/checkout/presentation/checkout_page.dart';
 import 'package:erish_app/features/orders/presentation/order_confirmation_page.dart';
 import 'package:erish_app/features/admin/presentation/admin_portal_page.dart';
+import 'package:erish_app/features/auth/presentation/auth_page.dart';
 import 'package:erish_app/services/cart_provider.dart';
 import 'package:erish_app/services/firebase_service.dart';
 
@@ -131,5 +132,41 @@ void main() {
     expect(find.text('ADMIN CONSOLE'), findsOneWidget);
     expect(find.text('Commerce Metrics Overview'), findsOneWidget);
     expect(find.text('Gross Revenue'), findsOneWidget);
+  });
+
+  testWidgets('AuthPage renders Sign In tab with inputs and actions', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: AuthPage(initialTab: AuthTab.signIn),
+      ),
+    );
+
+    await tester.pump();
+
+    expect(find.text('Sign In to ERISH'), findsOneWidget);
+    expect(find.text('SIGN IN'), findsNWidgets(2));
+    expect(find.text('REGISTER'), findsOneWidget);
+    expect(find.text('Email Address'), findsOneWidget);
+    expect(find.text('Password'), findsOneWidget);
+    expect(find.text('Forgot password?'), findsOneWidget);
+  });
+
+  testWidgets('AuthPage switches to Register tab and displays registration form', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: AuthPage(initialTab: AuthTab.signUp),
+      ),
+    );
+
+    await tester.pump();
+
+    expect(find.text('Create an Account'), findsOneWidget);
+    expect(find.text('Full Name'), findsOneWidget);
+    expect(find.text('Email Address'), findsOneWidget);
+    expect(find.text('Phone Number (Optional)'), findsOneWidget);
   });
 }
