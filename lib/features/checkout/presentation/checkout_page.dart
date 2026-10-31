@@ -270,6 +270,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       backgroundColor: AppColors.warmIvory,
       elevation: 0,
       centerTitle: false,
+      toolbarHeight: 68,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back, color: AppColors.espresso),
         onPressed: () => context.go('/'),
@@ -280,7 +281,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           cursor: SystemMouseCursors.click,
           child: Image.asset(
             'assets/images/erish-logo.png',
-            height: 34,
+            height: 44,
             fit: BoxFit.contain,
             errorBuilder: (context, error, stackTrace) => Text(
               'ERISH',

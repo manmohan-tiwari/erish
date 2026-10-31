@@ -43,7 +43,10 @@ class NavHeader extends StatelessWidget {
           bottom: BorderSide(color: AppColors.sandBorder, width: 1),
         ),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      padding: EdgeInsets.symmetric(
+        horizontal: isDesktop ? 32 : 20,
+        vertical: 10,
+      ),
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1240),
@@ -57,7 +60,7 @@ class NavHeader extends StatelessWidget {
                   cursor: SystemMouseCursors.click,
                   child: Image.asset(
                     'assets/images/erish-logo.png',
-                    height: 40,
+                    height: isDesktop ? 56 : 46,
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) => Text(
                       'ERISH',

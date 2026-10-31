@@ -188,6 +188,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       backgroundColor: AppColors.warmIvory,
       elevation: 0,
       centerTitle: false,
+      toolbarHeight: 68,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back, color: AppColors.espresso),
         tooltip: 'Back to Home',
@@ -205,7 +206,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           cursor: SystemMouseCursors.click,
           child: Image.asset(
             'assets/images/erish-logo.png',
-            height: 34,
+            height: isDesktop ? 48 : 40,
             fit: BoxFit.contain,
             errorBuilder: (context, error, stackTrace) => Text(
               'ERISH',

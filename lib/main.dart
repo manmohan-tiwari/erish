@@ -292,7 +292,7 @@ class _ErishHomePageState extends State<ErishHomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.asset('assets/images/erish-logo.png', height: 32),
+                    Image.asset('assets/images/erish-logo.png', height: 42),
                     IconButton(
                       icon: const Icon(Icons.close, color: AppColors.espresso),
                       onPressed: () => Navigator.of(context).pop(),
@@ -385,7 +385,7 @@ class _ErishHomePageState extends State<ErishHomePage> {
                     pinned: true,
                     floating: false,
                     automaticallyImplyLeading: false,
-                    toolbarHeight: 68,
+                    toolbarHeight: 76,
                     backgroundColor: AppColors.warmIvory,
                     surfaceTintColor: Colors.transparent,
                     flexibleSpace: NavHeader(
